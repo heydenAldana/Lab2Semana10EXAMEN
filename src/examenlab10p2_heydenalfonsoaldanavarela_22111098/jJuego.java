@@ -28,6 +28,9 @@ public class jJuego extends javax.swing.JFrame {
         // crear los personajes
         per.add(new Personaje('B', "Jack", 5000, 5000));
         per.add(new Personaje('M', "Ciber Errol", 30000, 500));
+        
+        // cargar combobox
+        cargarCBCarros();
     }
 
     private int ataqueMalvado()
@@ -75,26 +78,33 @@ public class jJuego extends javax.swing.JFrame {
             ref2.seek(0);
             while(ref2.getFilePointer() < ref2.length())
             {
-                ref2.skipBytes(32);
+                ref2.skipBytes(20);
+                ref2.readDouble();
+                ref2.readInt();
                 
                 String nombre = "";
                 for (int i = 0; i < 50; i++) 
                 {
                     nombre += ref2.readChar();
                 }
-                carros.add(nombre);
+                // carros.add(nombre);
                 
-                ref2.skipBytes(16);
+                cbcarros.addItem(nombre);
+                System.out.println(nombre);
+                
+                ref2.readInt();
+                ref2.readInt();
+                ref2.readInt();
+                ref2.readInt();
             }
             
             // llena el combobox
-            if(carros.size()>0)
-                cbcarros.setModel(new DefaultComboBoxModel(carros.toArray()));
+            // cbcarros.setModel(new DefaultComboBoxModel(carros.toArray()));
             
         } catch (FileNotFoundException ef) {
             JOptionPane.showMessageDialog(this, "ERROR:\n\nNo se encontró el archivo carritos.cars");
         } catch (IOException ei) {
-            JOptionPane.showMessageDialog(this, "ERROR:\n\nArchivo corrupto o fallo en lectura y escritura de datos");
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nCuidado, error en lectura y escritura de datos");
         }
     }
     /**
@@ -431,6 +441,11 @@ public class jJuego extends javax.swing.JFrame {
         bcrear.setFont(new java.awt.Font("Gabriola", 0, 14)); // NOI18N
         bcrear.setForeground(new java.awt.Color(102, 0, 0));
         bcrear.setText("C R E A R");
+        bcrear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bcrearMouseClicked(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(51, 51, 51));
@@ -444,7 +459,7 @@ public class jJuego extends javax.swing.JFrame {
 
         cbcarros.setBackground(new java.awt.Color(204, 204, 204));
         cbcarros.setFont(new java.awt.Font("Gabriola", 0, 14)); // NOI18N
-        cbcarros.setForeground(new java.awt.Color(0, 0, 0));
+        cbcarros.setForeground(new java.awt.Color(51, 51, 51));
         cbcarros.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 0, 0), new java.awt.Color(153, 153, 153)));
 
         jLabel18.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
@@ -455,6 +470,11 @@ public class jJuego extends javax.swing.JFrame {
         beliminar.setFont(new java.awt.Font("Gabriola", 0, 14)); // NOI18N
         beliminar.setForeground(new java.awt.Color(102, 0, 0));
         beliminar.setText("E L I M I N A R");
+        beliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                beliminarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -637,9 +657,9 @@ public class jJuego extends javax.swing.JFrame {
             // porcentaje derrape (int)
             ref.writeInt(Integer.parseInt(tderrape.getText()));
             // nombre del carro (String)
-            ab = new StringBuffer(tnombre.getText());
-            ab.setLength(50);
-            ref.writeChars(ab.toString());
+            StringBuffer ab2 = new StringBuffer(tnombre.getText());
+            ab2.setLength(50);
+            ref.writeChars(ab2.toString());
             // Salto de metros extra (int)
             if(cbtipos.getSelectedItem().toString().equals("Salto"))
                 ref.writeInt(ranSalto());
@@ -663,6 +683,7 @@ public class jJuego extends javax.swing.JFrame {
             else
                 ref.writeInt(0);
             
+            
             JOptionPane.showMessageDialog(this, "Carro creado correctamente");
             // ----------------------------------------------------- ..
         } catch (FileNotFoundException ef) {
@@ -677,7 +698,66 @@ public class jJuego extends javax.swing.JFrame {
         tvida.setText("");
         tataque.setText("");
         tderrape.setText("");
+        
+        // recargar cb
+        cargarCBCarros();
     }//GEN-LAST:event_bcrearMouseClicked
+
+    private void beliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_beliminarMouseClicked
+        // TODO add your handling code here:
+        try(RandomAccessFile ref3 = new RandomAccessFile("carritos.cars", "rw"))
+        {
+            // --------------------------------------------------- //
+            // para skip: 20 + 8 + 4 + 100 + (4x4) = 148
+            // tipo (String)
+            ref3.seek(0);
+            long pos = 0;
+            while(ref3.getFilePointer() < ref3.length())
+            {
+                pos = ref3.getFilePointer();
+                ref3.skipBytes(20);
+                ref3.readDouble();
+                ref3.readInt();
+                
+                String nombre = "";
+                for (int i = 0; i < 50; i++) 
+                {
+                    nombre += ref3.readChar();
+                }
+                
+                if(nombre.equals(cbcarros.getSelectedItem().toString()))
+                {
+                    StringBuffer ab2 = new StringBuffer("");
+                    ab2.setLength(10);
+                    
+                    ref3.writeChars(ab2.toString());
+                    ref3.writeDouble(0);
+                    ref3.writeInt(0);
+                    
+                    ab2.setLength(50);
+                    
+                    ref3.writeChars(ab2.toString());
+                    ref3.writeInt(0);
+                    ref3.writeInt(0);
+                    ref3.writeInt(0);
+                    ref3.writeInt(0);
+                    JOptionPane.showMessageDialog(this, "Carro eliminado correctamente");
+                    cbcarros.removeItem(nombre);
+                }
+                
+                ref3.readInt();
+                ref3.readInt();
+                ref3.readInt();
+                ref3.readInt();
+            }
+            
+            // ----------------------------------------------------- ..
+        } catch (FileNotFoundException ef) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nNo se encontró el archivo carritos.cars");
+        } catch (IOException ei) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nArchivo corrupto o fallo en lectura y escritura de datos");
+        }
+    }//GEN-LAST:event_beliminarMouseClicked
 
     /**
      * @param args the command line arguments
