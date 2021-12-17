@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -68,6 +70,48 @@ public class jJuego extends javax.swing.JFrame {
         return salto;
     }
     
+    // recargar trenoode
+    public void cargarJTree()
+    {
+        
+        DefaultMutableTreeNode nodes = (DefaultMutableTreeNode)jtree.getSelectionPath().getLastPathComponent();
+        DefaultTreeModel tree = (DefaultTreeModel)jtree.getModel();
+        tree.reload();
+        try(RandomAccessFile ref2 = new RandomAccessFile("carritos.cars", "rw"))
+        {
+            ref2.seek(0);
+            while(ref2.getFilePointer() < ref2.length())
+            {
+                ref2.skipBytes(20);
+                ref2.readDouble();
+                ref2.readInt();
+                
+                String nombre = "";
+                for (int i = 0; i < 50; i++) 
+                {
+                    nombre += ref2.readChar();
+                }
+                // carros.add(nombre);
+                
+                DefaultMutableTreeNode newnodes = new DefaultMutableTreeNode(nombre);
+                nodes.add(newnodes);
+                System.out.println(nombre);
+                
+                ref2.readInt();
+                ref2.readInt();
+                ref2.readInt();
+                ref2.readInt();
+            }
+            
+            // llena el combobox
+            // cbcarros.setModel(new DefaultComboBoxModel(carros.toArray()));
+            
+        } catch (FileNotFoundException ef) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nNo se encontró el archivo carritos.cars");
+        } catch (IOException ei) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nCuidado, error en lectura y escritura de datos");
+        }
+    }
     
     // recargar combobox carros
     public void cargarCBCarros()
@@ -127,7 +171,7 @@ public class jJuego extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        jtree = new javax.swing.JTree();
         jLabel2 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jProgressBar2 = new javax.swing.JProgressBar();
@@ -250,9 +294,11 @@ public class jJuego extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
+        jtree.setBackground(new java.awt.Color(0, 102, 102));
+        jtree.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jScrollPane1.setViewportView(jTree1);
+        jtree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(jtree);
 
         jLabel2.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
@@ -832,7 +878,7 @@ public class jJuego extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTree jTree1;
+    private javax.swing.JTree jtree;
     private javax.swing.JTextField tataque;
     private javax.swing.JTextField tderrape;
     private javax.swing.JTextField tnombre;
