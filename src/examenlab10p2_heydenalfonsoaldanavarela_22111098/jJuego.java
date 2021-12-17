@@ -33,6 +33,7 @@ public class jJuego extends javax.swing.JFrame {
         
         // cargar combobox
         cargarCBCarros();
+        cargarJTree();
     }
 
     private int ataqueMalvado()
@@ -73,10 +74,10 @@ public class jJuego extends javax.swing.JFrame {
     // recargar trenoode
     public void cargarJTree()
     {
-        
-        DefaultMutableTreeNode nodes = (DefaultMutableTreeNode)jtree.getSelectionPath().getLastPathComponent();
         DefaultTreeModel tree = (DefaultTreeModel)jtree.getModel();
-        tree.reload();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode)tree.getRoot();
+        
+        root.removeAllChildren();
         try(RandomAccessFile ref2 = new RandomAccessFile("carritos.cars", "rw"))
         {
             ref2.seek(0);
@@ -93,8 +94,8 @@ public class jJuego extends javax.swing.JFrame {
                 }
                 // carros.add(nombre);
                 
-                DefaultMutableTreeNode newnodes = new DefaultMutableTreeNode(nombre);
-                nodes.add(newnodes);
+                // DefaultMutableTreeNode newnodes = new DefaultMutableTreeNode(nombre);
+                root.add(new DefaultMutableTreeNode(nombre));
                 System.out.println(nombre);
                 
                 ref2.readInt();
@@ -105,7 +106,7 @@ public class jJuego extends javax.swing.JFrame {
             
             // llena el combobox
             // cbcarros.setModel(new DefaultComboBoxModel(carros.toArray()));
-            
+            tree.reload();
         } catch (FileNotFoundException ef) {
             JOptionPane.showMessageDialog(this, "ERROR:\n\nNo se encontró el archivo carritos.cars");
         } catch (IOException ei) {
@@ -173,19 +174,19 @@ public class jJuego extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtree = new javax.swing.JTree();
         jLabel2 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        jpjack = new javax.swing.JProgressBar();
+        jpciber = new javax.swing.JProgressBar();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        ataquejack = new javax.swing.JLabel();
+        vidajack = new javax.swing.JLabel();
+        vidaciber = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        ataqueciber = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         tnombre = new javax.swing.JTextField();
@@ -296,17 +297,22 @@ public class jJuego extends javax.swing.JFrame {
 
         jtree.setBackground(new java.awt.Color(0, 102, 102));
         jtree.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Carros");
         jtree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jtree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtreeMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtree);
 
         jLabel2.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("J a c k");
 
-        jProgressBar1.setBackground(new java.awt.Color(0, 255, 51));
+        jpjack.setBackground(new java.awt.Color(0, 255, 51));
 
-        jProgressBar2.setBackground(new java.awt.Color(255, 0, 0));
+        jpciber.setBackground(new java.awt.Color(255, 0, 0));
 
         jLabel3.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
@@ -320,7 +326,7 @@ public class jJuego extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(255, 153, 153));
         jButton2.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(102, 0, 0));
-        jButton2.setText("jButton1");
+        jButton2.setText("P A U S A R");
 
         jLabel4.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
@@ -330,17 +336,17 @@ public class jJuego extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Vida restante Jack:");
 
-        jLabel6.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(51, 204, 0));
-        jLabel6.setText("- - . - -");
+        ataquejack.setFont(new java.awt.Font("Gabriola", 1, 18)); // NOI18N
+        ataquejack.setForeground(new java.awt.Color(0, 153, 0));
+        ataquejack.setText("- - . - -");
 
-        jLabel7.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(51, 204, 0));
-        jLabel7.setText("- - . - -");
+        vidajack.setFont(new java.awt.Font("Gabriola", 1, 18)); // NOI18N
+        vidajack.setForeground(new java.awt.Color(0, 153, 0));
+        vidajack.setText("- - . - -");
 
-        jLabel8.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel8.setText("- - . - -");
+        vidaciber.setFont(new java.awt.Font("Gabriola", 1, 18)); // NOI18N
+        vidaciber.setForeground(new java.awt.Color(153, 0, 0));
+        vidaciber.setText("- - . - -");
 
         jLabel9.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
@@ -350,9 +356,9 @@ public class jJuego extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(51, 51, 51));
         jLabel10.setText("Ataque Ciber Errol :");
 
-        jLabel11.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel11.setText("- - . - -");
+        ataqueciber.setFont(new java.awt.Font("Gabriola", 1, 18)); // NOI18N
+        ataqueciber.setForeground(new java.awt.Color(153, 0, 0));
+        ataqueciber.setText("- - . - -");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -361,26 +367,26 @@ public class jJuego extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addContainerGap(31, Short.MAX_VALUE)
+                        .addContainerGap(13, Short.MAX_VALUE)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel7))
+                                .addComponent(vidajack))
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(46, 46, 46)
-                                .addComponent(jLabel6)))
+                                .addComponent(ataquejack)))
                         .addGap(81, 81, 81)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel8))
+                                .addComponent(vidaciber))
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(34, 34, 34)
-                                .addComponent(jLabel11))))
+                                .addComponent(ataqueciber))))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,9 +394,9 @@ public class jJuego extends javax.swing.JFrame {
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel2)
-                                .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jpjack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
-                                .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jpciber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(31, 31, 31))
@@ -403,11 +409,11 @@ public class jJuego extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jpjack, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jpciber, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -418,19 +424,19 @@ public class jJuego extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel6))
+                            .addComponent(ataquejack))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel7)))
+                            .addComponent(vidajack)))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel11))
+                            .addComponent(ataqueciber))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel8))))
+                            .addComponent(vidaciber))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -747,6 +753,7 @@ public class jJuego extends javax.swing.JFrame {
         
         // recargar cb
         cargarCBCarros();
+        cargarJTree();
     }//GEN-LAST:event_bcrearMouseClicked
 
     private void beliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_beliminarMouseClicked
@@ -803,7 +810,61 @@ public class jJuego extends javax.swing.JFrame {
         } catch (IOException ei) {
             JOptionPane.showMessageDialog(this, "ERROR:\n\nArchivo corrupto o fallo en lectura y escritura de datos");
         }
+        cargarJTree();
     }//GEN-LAST:event_beliminarMouseClicked
+
+    private void jtreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtreeMouseClicked
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode)jtree.getSelectionPath().getLastPathComponent();
+       
+        String elemento = root.getUserObject().toString();
+        // extraer vida y ataque con el carro
+        double ataque = 0; 
+        double vida = 0;
+        
+        try(RandomAccessFile ref2 = new RandomAccessFile("carritos.cars", "rw"))
+        {
+            ref2.seek(0);
+            long pos = 0;
+            while(ref2.getFilePointer() < ref2.length())
+            {
+                pos = ref2.getFilePointer();
+                ref2.skipBytes(20);
+                ref2.readDouble();
+                ref2.readInt();
+                
+                String nombre = "";
+                for (int i = 0; i < 50; i++) 
+                {
+                    nombre += ref2.readChar();
+                }
+               
+                int a1 = ref2.readInt();
+                int a2 = ref2.readInt();
+                int v1 = ref2.readInt();
+                int v2 = ref2.readInt();
+                
+                if(nombre.equals(elemento))
+                {
+                    ataque = a1 + a2 + per.get(0).getAtaque();
+                    ataquejack.setText(String.valueOf(ataque));
+                    vida = v1 + v2 + per.get(0).getVida();
+                    vidajack.setText(String.valueOf(vida));
+                    // setea la vida de jack
+                    jpjack.setMaximum(vida);
+                    jpjack.setValue(vida);
+                    break;
+                }
+            }
+            
+            // llena el combobox
+            // cbcarros.setModel(new DefaultComboBoxModel(carros.toArray()));
+            
+        } catch (FileNotFoundException ef) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nNo se encontró el archivo carritos.cars");
+        } catch (IOException ei) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nCuidado, error en lectura y escritura de datos");
+        }
+    }//GEN-LAST:event_jtreeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -841,6 +902,8 @@ public class jJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ataqueciber;
+    private javax.swing.JLabel ataquejack;
     private javax.swing.JButton bcrear;
     private javax.swing.JButton beliminar;
     private javax.swing.JComboBox<String> cbcarros;
@@ -849,7 +912,6 @@ public class jJuego extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -861,9 +923,6 @@ public class jJuego extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -874,15 +933,17 @@ public class jJuego extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JProgressBar jpciber;
+    private javax.swing.JProgressBar jpjack;
     private javax.swing.JTree jtree;
     private javax.swing.JTextField tataque;
     private javax.swing.JTextField tderrape;
     private javax.swing.JTextField tnombre;
     private javax.swing.JTextField tvelocidad;
     private javax.swing.JTextField tvida;
+    private javax.swing.JLabel vidaciber;
+    private javax.swing.JLabel vidajack;
     // End of variables declaration//GEN-END:variables
 }
