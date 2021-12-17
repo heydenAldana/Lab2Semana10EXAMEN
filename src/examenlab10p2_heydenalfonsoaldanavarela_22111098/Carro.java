@@ -18,7 +18,7 @@ public class Carro
     private int pderrape;
     private String nombre;
     private int metrosextrasalto;
-    private int ataque, pataqueextra, vida, vidasextra;
+    private int ataque, pataqueextra, vida;
 
     private Random rand;
     
@@ -51,14 +51,12 @@ public class Carro
         // Para el carrito malvado
         if(this.tipo.equals("Malvado"))
             this.vida = vidaMalvado();
+        else if(this.tipo.equals("Belico"))
+            this.vida = vida + ranVidasExtra(vida);
         else    
             this.vida = vida;
         
-        // vidas extra por tipo
-        if(this.tipo.equals("Belicos"))
-            this.vidasextra = ranVidasExtra();
-        else
-            this.vidasextra = 0;
+        
     }
 
     public String getTipo() {
@@ -124,14 +122,6 @@ public class Carro
     public void setVida(int vida) {
         this.vida = vida;
     }
-
-    public int getVidasextra() {
-        return vidasextra;
-    }
-
-    public void setVidasextra(int vidasextra) {
-        this.vidasextra = vidasextra;
-    }
     
     private int ataqueMalvado()
     {
@@ -147,10 +137,10 @@ public class Carro
         return vida;
     }
     
-    private int ranVidasExtra()
+    private int ranVidasExtra(int vida)
     {
         rand = new Random();
-        int vidas = rand.nextInt(99);
+        int vidas = rand.nextInt(vida);
         return vidas;
     }
 }
