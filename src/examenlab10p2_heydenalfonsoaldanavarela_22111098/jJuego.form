@@ -392,12 +392,6 @@
                       <SubComponents>
                         <Component class="javax.swing.JTree" name="jTree1">
                           <Properties>
-                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="66" green="66" red="0" type="rgb"/>
-                            </Property>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Consolas" size="14" style="0"/>
-                            </Property>
                             <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
                               <TreeModel code=""/>
                             </Property>
@@ -466,7 +460,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="0" green="0" red="66" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="P A U S A R"/>
+                        <Property name="text" type="java.lang.String" value="jButton1"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -617,26 +611,24 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                              <Component id="beliminar" min="-2" pref="169" max="-2" attributes="0"/>
-                                              <Group type="102" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" attributes="0">
-                                                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="0" attributes="0">
-                                                              <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                              <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                          <Component id="tvida" alignment="0" pref="169" max="32767" attributes="0"/>
-                                                          <Component id="tderrape" alignment="0" pref="169" max="32767" attributes="0"/>
-                                                          <Component id="cbtipos" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="cbcarros" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="beliminar" min="-2" pref="169" max="-2" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
-                                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="tvida" alignment="0" pref="169" max="32767" attributes="0"/>
+                                                      <Component id="tderrape" alignment="0" pref="169" max="32767" attributes="0"/>
+                                                      <Component id="cbtipos" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="cbcarros" alignment="0" max="32767" attributes="0"/>
+                                                  </Group>
                                               </Group>
+                                              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
                                               <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
@@ -880,9 +872,6 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="C R E A R"/>
                       </Properties>
-                      <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bcrearMouseClicked"/>
-                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel17">
                       <Properties>
@@ -940,13 +929,7 @@
                           <Color blue="0" green="0" red="0" type="rgb"/>
                         </Property>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="5">
-                            <StringItem index="0" value="Normal"/>
-                            <StringItem index="1" value="Belico"/>
-                            <StringItem index="2" value="Ataque"/>
-                            <StringItem index="3" value="Salto"/>
-                            <StringItem index="4" value="Malvado"/>
-                          </StringArray>
+                          <StringArray count="0"/>
                         </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">

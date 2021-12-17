@@ -5,7 +5,13 @@
  */
 package examenlab10p2_heydenalfonsoaldanavarela_22111098;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Random;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,7 +20,8 @@ import java.util.ArrayList;
 public class jJuego extends javax.swing.JFrame {
 
     private ArrayList<Personaje> per = new ArrayList<Personaje>();
-    
+    private ArrayList<String> carros = new ArrayList<String>();
+    private Random rand;
     public jJuego() {
         initComponents();
         
@@ -23,6 +30,73 @@ public class jJuego extends javax.swing.JFrame {
         per.add(new Personaje('M', "Ciber Errol", 30000, 500));
     }
 
+    private int ataqueMalvado()
+    {
+        rand = new Random();
+        int ataque = rand.nextInt(400) + 300;
+        return ataque;
+    }
+    
+    private int vidaMalvado()
+    {
+        rand = new Random();
+        int vida = rand.nextInt(4000) + 1000;
+        return vida;
+    }
+    
+    private int ranAtaqueExtra()
+    {
+        rand = new Random();
+        int ataque = rand.nextInt(Integer.parseInt(tataque.getText()));
+        return ataque;
+    }
+    
+    private int ranVidasExtra(int vida)
+    {
+        rand = new Random();
+        int vidas = rand.nextInt(vida);
+        return vidas;
+    }
+    
+    private int ranSalto()
+    {
+        rand = new Random();
+        int salto = rand.nextInt(100);
+        return salto;
+    }
+    
+    
+    // recargar combobox carros
+    public void cargarCBCarros()
+    {
+        carros.clear();
+        try(RandomAccessFile ref2 = new RandomAccessFile("carritos.cars", "rw"))
+        {
+            ref2.seek(0);
+            while(ref2.getFilePointer() < ref2.length())
+            {
+                ref2.skipBytes(32);
+                
+                String nombre = "";
+                for (int i = 0; i < 50; i++) 
+                {
+                    nombre += ref2.readChar();
+                }
+                carros.add(nombre);
+                
+                ref2.skipBytes(16);
+            }
+            
+            // llena el combobox
+            if(carros.size()>0)
+                cbcarros.setModel(new DefaultComboBoxModel(carros.toArray()));
+            
+        } catch (FileNotFoundException ef) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nNo se encontró el archivo carritos.cars");
+        } catch (IOException ei) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nArchivo corrupto o fallo en lectura y escritura de datos");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,8 +240,6 @@ public class jJuego extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTree1.setBackground(new java.awt.Color(0, 102, 102));
-        jTree1.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane1.setViewportView(jTree1);
@@ -192,7 +264,7 @@ public class jJuego extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(255, 153, 153));
         jButton2.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(102, 0, 0));
-        jButton2.setText("P A U S A R");
+        jButton2.setText("jButton1");
 
         jLabel4.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
@@ -359,11 +431,6 @@ public class jJuego extends javax.swing.JFrame {
         bcrear.setFont(new java.awt.Font("Gabriola", 0, 14)); // NOI18N
         bcrear.setForeground(new java.awt.Color(102, 0, 0));
         bcrear.setText("C R E A R");
-        bcrear.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                bcrearMouseClicked(evt);
-            }
-        });
 
         jLabel17.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(51, 51, 51));
@@ -378,7 +445,6 @@ public class jJuego extends javax.swing.JFrame {
         cbcarros.setBackground(new java.awt.Color(204, 204, 204));
         cbcarros.setFont(new java.awt.Font("Gabriola", 0, 14)); // NOI18N
         cbcarros.setForeground(new java.awt.Color(0, 0, 0));
-        cbcarros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Belico", "Ataque", "Salto", "Malvado" }));
         cbcarros.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 0, 0), new java.awt.Color(153, 153, 153)));
 
         jLabel18.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
@@ -425,21 +491,20 @@ public class jJuego extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(beliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel9Layout.createSequentialGroup()
-                                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel9Layout.createSequentialGroup()
-                                            .addGap(59, 59, 59)
-                                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel17)
-                                                .addComponent(jLabel13)))
-                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(tvida, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                                            .addComponent(tderrape, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                                            .addComponent(cbtipos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(cbcarros, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGap(41, 41, 41)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(beliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel9Layout.createSequentialGroup()
+                                        .addGap(59, 59, 59)
+                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel17)
+                                            .addComponent(jLabel13)))
+                                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(tvida, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                                        .addComponent(tderrape, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                                        .addComponent(cbtipos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbcarros, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(41, 41, 41))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel18)
                                 .addGap(99, 99, 99))))))
@@ -559,7 +624,59 @@ public class jJuego extends javax.swing.JFrame {
      * BOTON PARA CREAR REGISTROS EN ARCHIVO BINARIO
     */
     private void bcrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bcrearMouseClicked
-        // TODO add your handling code here:
+        try(RandomAccessFile ref = new RandomAccessFile("carritos.cars", "rw"))
+        {
+            // --------------------------------------------------- //
+            // para skip: 20 + 8 + 4 + 100 + (4x4) = 148
+            // tipo (String)
+            StringBuffer ab = new StringBuffer(cbtipos.getSelectedItem().toString());
+            ab.setLength(10);
+            ref.writeChars(ab.toString());
+            // velocidad (Double)
+            ref.writeDouble(Double.valueOf(tvelocidad.getText()));
+            // porcentaje derrape (int)
+            ref.writeInt(Integer.parseInt(tderrape.getText()));
+            // nombre del carro (String)
+            ab = new StringBuffer(tnombre.getText());
+            ab.setLength(50);
+            ref.writeChars(ab.toString());
+            // Salto de metros extra (int)
+            if(cbtipos.getSelectedItem().toString().equals("Salto"))
+                ref.writeInt(ranSalto());
+            else
+                ref.writeInt(0);
+            // ataque normal (int)
+            if(cbtipos.getSelectedItem().toString().equals("Malvado"))
+                ref.writeInt(ataqueMalvado());
+            else
+                ref.writeInt(Integer.parseInt(tataque.getText()));
+            // ataque extra (int)
+            if(cbtipos.getSelectedItem().toString().equals("Ataque"))
+                ref.writeInt(ranAtaqueExtra());
+            else
+                ref.writeInt(0);
+            // Vida (con todo y extra
+            if(cbtipos.getSelectedItem().toString().equals("Malvado"))
+                ref.writeInt(vidaMalvado());
+            else if(cbtipos.getSelectedItem().toString().equals("Belico"))
+                ref.writeInt(ranVidasExtra(Integer.parseInt(tvida.getText())));
+            else
+                ref.writeInt(0);
+            
+            JOptionPane.showMessageDialog(this, "Carro creado correctamente");
+            // ----------------------------------------------------- ..
+        } catch (FileNotFoundException ef) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nNo se encontró el archivo carritos.cars");
+        } catch (IOException ei) {
+            JOptionPane.showMessageDialog(this, "ERROR:\n\nArchivo corrupto o fallo en lectura y escritura de datos");
+        }
+        
+        // limpiar
+        tnombre.setText("");
+        tvelocidad.setText("");
+        tvida.setText("");
+        tataque.setText("");
+        tderrape.setText("");
     }//GEN-LAST:event_bcrearMouseClicked
 
     /**
