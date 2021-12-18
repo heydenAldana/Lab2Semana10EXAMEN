@@ -53,14 +53,15 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
                 jpciber.setValue(0);
                 jfLose l = new jfLose();
                 l.setVisible(true);
+                jtree.setEnabled(true);
             }
             if(jpciber.getValue() <= 0)
             {
-                this.hide();
                 jpjack.setValue(0);
                 jpciber.setValue(0);
                 jfWin l = new jfWin();
                 l.setVisible(true);
+                jtree.setEnabled(true);
             }
             // PELEAN
             if(contador == 2)
@@ -364,11 +365,21 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
         jButton1.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(102, 0, 0));
         jButton1.setText("E M P E Z A R");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(255, 153, 153));
         jButton2.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(102, 0, 0));
         jButton2.setText("P A U S A R");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Gabriola", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
@@ -911,6 +922,17 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
             JOptionPane.showMessageDialog(this, "ERROR:\n\nCuidado, error en lectura y escritura de datos");
         }
     }//GEN-LAST:event_jtreeMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        pausa = false;
+        jtree.setEnabled(false);
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        pausa = true;
+    }//GEN-LAST:event_jButton2MouseClicked
 
     /**
      * @param args the command line arguments
