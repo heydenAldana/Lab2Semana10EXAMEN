@@ -19,7 +19,7 @@ import javax.swing.tree.DefaultTreeModel;
  *
  * @author heyde
  */
-public class jJuego extends javax.swing.JFrame {
+public class jJuego extends javax.swing.JFrame implements Runnable{
 
     private ArrayList<Personaje> per = new ArrayList<Personaje>();
     private ArrayList<String> carros = new ArrayList<String>();
@@ -94,7 +94,7 @@ public class jJuego extends javax.swing.JFrame {
                 }
                 // carros.add(nombre);
                 
-                // DefaultMutableTreeNode newnodes = new DefaultMutableTreeNode(nombre);
+                               
                 root.add(new DefaultMutableTreeNode(nombre));
                 System.out.println(nombre);
                 
@@ -850,8 +850,11 @@ public class jJuego extends javax.swing.JFrame {
                     vida = v1 + v2 + per.get(0).getVida();
                     vidajack.setText(String.valueOf(vida));
                     // setea la vida de jack
-                    jpjack.setMaximum(vida);
-                    jpjack.setValue(vida);
+                    jpjack.setMaximum((int)vida);
+                    jpjack.setValue((int)vida);
+                    // setea la vida del villano
+                    jpciber.setMaximum((int)per.get(1).getVida());
+                    jpciber.setValue((int)per.get(1).getVida());
                     break;
                 }
             }
