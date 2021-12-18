@@ -48,7 +48,19 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
             // VERIFICA SI SIGUIEN VIVOS.
             if(jpjack.getValue() <= 0)
             {
-                
+                this.hide();
+                jpjack.setValue(0);
+                jpciber.setValue(0);
+                jfLose l = new jfLose();
+                l.setVisible(true);
+            }
+            if(jpciber.getValue() <= 0)
+            {
+                this.hide();
+                jpjack.setValue(0);
+                jpciber.setValue(0);
+                jfWin l = new jfWin();
+                l.setVisible(true);
             }
             // PELEAN
             if(contador == 2)
