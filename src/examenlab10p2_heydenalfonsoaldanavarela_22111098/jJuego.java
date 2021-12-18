@@ -29,6 +29,8 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
     
     public jJuego() {
         initComponents();
+        // enabled a true
+        jtree.setEnabled(true);
         
         // crear los personajes
         per.add(new Personaje('B', "Jack", 5000, 5000));
@@ -53,7 +55,7 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
                 jpciber.setValue(0);
                 jfLose l = new jfLose();
                 l.setVisible(true);
-                jtree.setEnabled(true);
+                // jtree.setEnabled(true);
             }
             if(jpciber.getValue() <= 0)
             {
@@ -61,7 +63,7 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
                 jpciber.setValue(0);
                 jfWin l = new jfWin();
                 l.setVisible(true);
-                jtree.setEnabled(true);
+                // jtree.setEnabled(true);
             }
             // PELEAN
             if(contador == 2)

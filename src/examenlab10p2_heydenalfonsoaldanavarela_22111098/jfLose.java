@@ -5,6 +5,11 @@
  */
 package examenlab10p2_heydenalfonsoaldanavarela_22111098;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 /**
  *
  * @author heyde
@@ -16,8 +21,21 @@ public class jfLose extends javax.swing.JFrame {
      */
     public jfLose() {
         initComponents();
+        try
+        {
+            tocar();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
+    public void tocar() throws Exception
+    {
+        String sonido = "./src/examenlab10p2_heydenalfonsoaldanavarela_22111098/musical.wav";
+        InputStream io = new FileInputStream(sonido);
+        InputStream audio = new AudioStream(io);
+        AudioPlayer.player.start(audio);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,7 +74,7 @@ public class jfLose extends javax.swing.JFrame {
                 bcontinuarMouseClicked(evt);
             }
         });
-        jPanel1.add(bcontinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 210, 60));
+        jPanel1.add(bcontinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 210, 60));
 
         bsalirjuego.setBackground(new java.awt.Color(153, 0, 0));
         bsalirjuego.setFont(new java.awt.Font("Gabriola", 1, 24)); // NOI18N
@@ -68,7 +86,7 @@ public class jfLose extends javax.swing.JFrame {
                 bsalirjuegoMouseClicked(evt);
             }
         });
-        jPanel1.add(bsalirjuego, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, 210, 60));
+        jPanel1.add(bsalirjuego, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, 210, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

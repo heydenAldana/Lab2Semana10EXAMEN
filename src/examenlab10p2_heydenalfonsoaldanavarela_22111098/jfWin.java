@@ -5,6 +5,11 @@
  */
 package examenlab10p2_heydenalfonsoaldanavarela_22111098;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 /**
  *
  * @author heyde
@@ -16,8 +21,21 @@ public class jfWin extends javax.swing.JFrame {
      */
     public jfWin() {
         initComponents();
+        try
+        {
+            tocar();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
+    public void tocar() throws Exception
+    {
+        String sonido = "./src/examenlab10p2_heydenalfonsoaldanavarela_22111098/musicaw.wav";
+        InputStream io = new FileInputStream(sonido);
+        InputStream audio = new AudioStream(io);
+        AudioPlayer.player.start(audio);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,6 +50,8 @@ public class jfWin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        bcontinuar = new javax.swing.JButton();
+        bsalirjuego = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,6 +86,28 @@ public class jfWin extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
+        bcontinuar.setBackground(new java.awt.Color(255, 153, 153));
+        bcontinuar.setFont(new java.awt.Font("Gabriola", 1, 24)); // NOI18N
+        bcontinuar.setForeground(new java.awt.Color(153, 0, 0));
+        bcontinuar.setText("c o n t i n u a r");
+        bcontinuar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bcontinuar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bcontinuarMouseClicked(evt);
+            }
+        });
+
+        bsalirjuego.setBackground(new java.awt.Color(255, 153, 153));
+        bsalirjuego.setFont(new java.awt.Font("Gabriola", 1, 24)); // NOI18N
+        bsalirjuego.setForeground(new java.awt.Color(153, 0, 0));
+        bsalirjuego.setText("s a l i r");
+        bsalirjuego.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bsalirjuego.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bsalirjuegoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -78,6 +120,12 @@ public class jfWin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bcontinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(bsalirjuego, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,8 +133,13 @@ public class jfWin extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bcontinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bsalirjuego, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -103,6 +156,18 @@ public class jfWin extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bcontinuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bcontinuarMouseClicked
+        jJuego h = new jJuego();
+        h.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_bcontinuarMouseClicked
+
+    private void bsalirjuegoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bsalirjuegoMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+        AudioPlayer.player.stop();
+    }//GEN-LAST:event_bsalirjuegoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -140,6 +205,8 @@ public class jfWin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bcontinuar;
+    private javax.swing.JButton bsalirjuego;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
