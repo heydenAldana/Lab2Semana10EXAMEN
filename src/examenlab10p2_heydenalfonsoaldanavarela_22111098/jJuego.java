@@ -22,8 +22,11 @@ import javax.swing.tree.DefaultTreeModel;
 public class jJuego extends javax.swing.JFrame implements Runnable{
 
     private ArrayList<Personaje> per = new ArrayList<Personaje>();
-    private ArrayList<String> carros = new ArrayList<String>();
     private Random rand;
+    private boolean pausa = true;
+    int contador = 0;
+    
+    
     public jJuego() {
         initComponents();
         
@@ -36,6 +39,34 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
         cargarJTree();
     }
 
+    // HILOS
+    public void run()
+    {
+        
+        while(pausa == false)
+        {
+            // VERIFICA SI SIGUIEN VIVOS.
+            if(jpjack.getValue() <= 0)
+            {
+                
+            }
+            // PELEAN
+            if(contador == 2)
+            {
+                jpjack.setValue(jpjack.getValue() - Integer.parseInt(ataqueciber.getText()));
+                contador = 0;
+            }
+            jpciber.setValue(jpciber.getValue() - Integer.parseInt(ataquejack.getText()));
+            contador++;
+            
+            try
+            {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println("LABEL MURIO :(");
+            }
+        }
+    }
     private int ataqueMalvado()
     {
         rand = new Random();
@@ -117,7 +148,6 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
     // recargar combobox carros
     public void cargarCBCarros()
     {
-        carros.clear();
         try(RandomAccessFile ref2 = new RandomAccessFile("carritos.cars", "rw"))
         {
             ref2.seek(0);
@@ -813,6 +843,7 @@ public class jJuego extends javax.swing.JFrame implements Runnable{
         cargarJTree();
     }//GEN-LAST:event_beliminarMouseClicked
 
+    
     private void jtreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtreeMouseClicked
         DefaultMutableTreeNode root = (DefaultMutableTreeNode)jtree.getSelectionPath().getLastPathComponent();
        
